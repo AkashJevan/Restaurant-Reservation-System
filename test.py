@@ -24,8 +24,8 @@ class Seat:
             return f"Reserved for {self.user} at price ${self.price}"
         return "Available"
 
-#Setting User info
-class User:
+#Setting Customer info
+class Customer:
     #Initializing user info
     def __init__(self, first_name, last_name):
         self.first_name = first_name
@@ -41,11 +41,11 @@ def main():
     last_name = input("Enter the last name: ")
 
     #Create user and seat
-    user = User(first_name, last_name)
+    customer = customer(first_name, last_name)
     seat_A1 = Seat()
 
-    #Reserve seat for user
-    seat_A1.reserve(user, 100)
+    #Reserve seat for customer
+    seat_A1.reserve(customer, 100)
 
     #Print output
     print(seat_A1)
