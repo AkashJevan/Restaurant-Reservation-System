@@ -41,7 +41,7 @@ def main():
     last_name = input("Enter the last name: ")
 
     #Create customer and seat
-    customer = customer(first_name, last_name)
+    customer = Customer(first_name, last_name)
     seat_A1 = Seat()
 
     #Reserve seat for customer
@@ -53,4 +53,3 @@ def main():
 #Call main
 if __name__ == "__main__":
     main()
-
