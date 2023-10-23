@@ -3,30 +3,30 @@ import tkinter as tk
 
 #Defining seat n properties 
 class Seat:
-    #Setting viod seat
+    #Setting void seat
     def __init__(self):
-        self.user = None
+        self.customer = None
         self.price = 0
 
-    #Reserve user n price for seat
-    def reserve(self, user, price):
-        self.user = user
+    #Reserve customer n price for seat
+    def reserve(self, customer, price):
+        self.customer = customer
         self.price = price
 
     #Emty seat
     def clear_reservation(self):
-        self.user = None
+        self.customer = None
         self.price = 0
 
     #Print seat status
     def __str__(self):
-        if self.user:
-            return f"Reserved for {self.user} at price ${self.price}"
+        if self.customer:
+            return f"Reserved for {self.customer} at price ${self.price}"
         return "Available"
 
 #Setting Customer info
 class Customer:
-    #Initializing user info
+    #Initializing customer info
     def __init__(self, first_name, last_name):
         self.first_name = first_name
         self.last_name = last_name
@@ -40,7 +40,7 @@ def main():
     first_name = input("Enter the first name: ")
     last_name = input("Enter the last name: ")
 
-    #Create user and seat
+    #Create customer and seat
     customer = customer(first_name, last_name)
     seat_A1 = Seat()
 
