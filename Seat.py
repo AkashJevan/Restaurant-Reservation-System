@@ -10,11 +10,11 @@ class Seat:
     def reserve(self, customer):
         self.customer = customer
 
-    # Method to clear a seat reservation
+    #Method to clear a seat reservation
     def clear(self):
         self.customer = None
 
-    # Method to return string representation of Seat object
+    #Method to return string representation of Seat object
     def __str__(self):
         if self.customer:
             return f"Seat reserved for {self.customer} on {self.date} at {self.time} for {self.party_size} people."
