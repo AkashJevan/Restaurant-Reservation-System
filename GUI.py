@@ -2,7 +2,7 @@ import tkinter as tk
 from Seat import Seat
 from Customer import Customer
 
-class ReservationApp:
+class Reservation:
     def __init__(self, root):
         self.root = root
         self.root.title("Table Reservation")
@@ -156,5 +156,5 @@ class ReservationApp:
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = ReservationApp(root)
+    app = Reservation(root)
     root.mainloop()
