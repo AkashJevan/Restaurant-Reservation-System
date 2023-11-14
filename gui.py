@@ -9,10 +9,10 @@ class ReservationGUI:
         self.master = master
         master.title("Restaurant Reservation System")
 
-        # Initialize the reservation manager
+        #Initialize the reservation manager
         self.reservation_manager = ReservationManager()
 
-        # Create and place the labels and entry widgets for the form
+        #Create and place the labels and entry widgets for the form
         self.label_name = tk.Label(master, text="Name")
         self.label_name.grid(row=0, column=0)
         self.entry_name = tk.Entry(master)
@@ -33,18 +33,18 @@ class ReservationGUI:
         self.entry_party_size = tk.Entry(master)
         self.entry_party_size.grid(row=3, column=1)
 
-        # Create and place the submit button
+        #Create and place the submit button
         self.submit_button = tk.Button(master, text="Submit Reservation", command=self.submit)
         self.submit_button.grid(row=4, column=0, columnspan=2)
 
     def submit(self):
-        # Get the values from the entries
+        #Get the values from the entries
         name = self.entry_name.get()
         date = self.entry_date.get()
         time = self.entry_time.get()
         party_size = self.entry_party_size.get()
 
-        # Validate and create reservation
+        #Validate and create reservation
         if self.validate_date(date) and self.validate_time(time) and name and party_size.isdigit():
             reservation = Reservation(name, date, time, int(party_size))
             self.reservation_manager.add_reservation(reservation)
@@ -69,13 +69,13 @@ class ReservationGUI:
             return False
 
     def clear_entries(self):
-        # Clear the entry fields for a new reservation
+        #Clear the entry fields for a new reservation
         self.entry_name.delete(0, tk.END)
         self.entry_date.delete(0, tk.END)
         self.entry_time.delete(0, tk.END)
         self.entry_party_size.delete(0, tk.END)
 
-# Run the GUI application
+#Run the GUI application
 if __name__ == "__main__":
     root = tk.Tk()
     gui = ReservationGUI(root)
