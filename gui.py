@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import ttk, messagebox
 from datetime import datetime
 from reservation import Reservation
 from reservation_manager import ReservationManager
@@ -33,9 +33,20 @@ class ReservationGUI:
         self.entry_party_size = tk.Entry(master)
         self.entry_party_size.grid(row=3, column=1)
 
+        # Create and place the reservations dropdown
+        self.label_reservation = tk.Label(master, text="Select Reservation (if already submitted)")
+        self.label_reservation.grid(row=4, column=0)
+        self.reservation_var = tk.StringVar()
+        self.reservation_dropdown = ttk.Combobox(master, textvariable=self.reservation_var, state="readonly")
+        self.reservation_dropdown.grid(row=4, column=1)
+        self.reservation_dropdown.bind("<<ComboboxSelected>>", self.show_selected_reservation)
+
         #Create and place the submit button
         self.submit_button = tk.Button(master, text="Submit Reservation", command=self.submit)
-        self.submit_button.grid(row=4, column=0, columnspan=2)
+        self.submit_button.grid(row=5, column=0, columnspan=2)
+
+        # Load reservations into the dropdown
+        self.load_reservations()
 
     def submit(self):
         #get values from entries
@@ -51,6 +62,7 @@ class ReservationGUI:
             self.reservation_manager.save_to_file('reservations.txt')
             messagebox.showinfo("Reservation Submitted", "Reservation has been successfully submitted!")
             self.clear_entries()
+            self.load_reservations()  # Refresh the reservations in the dropdown
         else:
             messagebox.showerror("Error", "Please enter valid reservation details.")
 
@@ -74,6 +86,32 @@ class ReservationGUI:
         self.entry_date.delete(0, tk.END)
         self.entry_time.delete(0, tk.END)
         self.entry_party_size.delete(0, tk.END)
+
+    def load_reservations(self):
+        # Load reservations from the file into the dropdown
+        reservations = self.reservation_manager.load_from_file('reservations.txt')
+        self.reservation_dropdown['values'] = reservations
+
+    def show_selected_reservation(self):
+        # Retrieve the selected reservation from the dropdown
+        selected_reservation = self.reservation_var.get()
+
+        # Find the reservation object corresponding to the selected name
+        reservation_obj = None
+        for reservation in self.reservation_manager.reservations:
+            if reservation.customer_name == selected_reservation:
+                reservation_obj = reservation
+                break
+
+        # Display the details in a pop-up box
+        if reservation_obj:
+            details = f"Name: {reservation_obj.customer_name}\n" \
+                      f"Date: {reservation_obj.reservation_date}\n" \
+                      f"Time: {reservation_obj.reservation_time}\n" \
+                      f"Party Size: {reservation_obj.party_size}"
+            messagebox.showinfo("Reservation Details", details)
+        else:
+            messagebox.showerror("Error", "Selected reservation not found!")
 
 #run gui
 if __name__ == "__main__":
