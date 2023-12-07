@@ -5,6 +5,9 @@ class Reservation:
         self.reservation_time = reservation_time
         self.party_size = party_size
 
+    def to_list(self):
+        return [self.customer_name, self.reservation_date, self.reservation_time, self.party_size]
+
     def __str__(self):
         return (f"Reservation for {self.customer_name} on {self.reservation_date} "
                 f"at {self.reservation_time} for {self.party_size} people.")
