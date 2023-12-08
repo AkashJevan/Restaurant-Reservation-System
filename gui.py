@@ -61,7 +61,6 @@ class ReservationGUI:
         else:
             messagebox.showerror("Error", "Please enter valid reservation details.")
 
-
     def validate_date(self, date_text):
         try:
             datetime.strptime(date_text, '%m-%d')
