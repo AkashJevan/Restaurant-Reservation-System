@@ -11,3 +11,11 @@ class Reservation:
     def __str__(self):
         return (f"Reservation for {self.customer_name} on {self.reservation_date} "
                 f"at {self.reservation_time} for {self.party_size} people.")
+    
+    def __eq__(self, other):
+        if isinstance(other, Reservation):
+            return (self.customer_name == other.customer_name and 
+                    self.reservation_date == other.reservation_date and
+                    self.reservation_time == other.reservation_time and
+                    self.party_size == other.party_size)
+        return False
