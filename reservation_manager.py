@@ -35,4 +35,4 @@ class ReservationManager:
                         reservation_obj = Reservation(*row)
                         self.reservations.append(reservation_obj)
         except FileNotFoundError:
-            print(f"No existing file found at {file_path}, starting fresh.")
+            print(f"No existing file found at {file_path}.")
