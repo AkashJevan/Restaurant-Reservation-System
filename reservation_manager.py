@@ -23,7 +23,6 @@ class ReservationManager:
 
         self.save_to_file(self.file_path)
 
-
     def save_to_file(self, file_path):
         try:
             with open(file_path, 'w', newline='') as file:
