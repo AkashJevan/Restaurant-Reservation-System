@@ -7,6 +7,7 @@ class ReservationManager:
         self.file_path = 'reservation.csv'
         self.load_from_file(self.file_path)
 
+    #adds/updates reservation
     def add_or_update_reservation(self, new_reservation):
         index_to_update = None
         for i, reservation in enumerate(self.reservations):
@@ -23,6 +24,7 @@ class ReservationManager:
 
         self.save_to_file(self.file_path)
 
+    #saves current list of reservations to CSV file
     def save_to_file(self, file_path):
         try:
             with open(file_path, 'w', newline='') as file:
@@ -33,12 +35,13 @@ class ReservationManager:
         except Exception as e:
             print(f"Error writing to file: {e}")
 
+    #loads reservations from the CSV file
     def load_from_file(self, file_path):
         self.reservations.clear()
         try:
             with open(file_path, 'r') as file:
                 reader = csv.reader(file)
-                next(reader)  # Skip the header
+                next(reader)  #skip the header
                 for row in reader:
                     if len(row) == 4:
                         row[3] = int(row[3])
