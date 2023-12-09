@@ -4,15 +4,17 @@ from datetime import datetime
 from reservation import Reservation
 from reservation_manager import ReservationManager
 
+#main GUI class
 class ReservationGUI:
+    #sets up the main window
     def __init__(self, master):
         self.master = master
         master.title("Restaurant Reservation System")
         self.reservation_manager = ReservationManager()
         self.setup_widgets()
-
+    
+    #GUI layout
     def setup_widgets(self):
-        # UI layout
         self.label_name = tk.Label(self.master, text="Name")
         self.label_name.grid(row=0, column=0)
         self.entry_name = tk.Entry(self.master)
@@ -45,6 +47,7 @@ class ReservationGUI:
 
         self.load_reservations()
 
+    #handles submission made from GUI
     def submit(self):
         name = self.entry_name.get()
         date = self.entry_date.get()
@@ -53,7 +56,6 @@ class ReservationGUI:
 
         if self.validate_date(date) and self.validate_time(time) and name and party_size.isdigit():
             reservation = Reservation(name, date, time, int(party_size))
-            # Update the line below to use add_or_update_reservation
             self.reservation_manager.add_or_update_reservation(reservation)
             messagebox.showinfo("Reservation Submitted", "Reservation has been successfully submitted!")
             self.clear_entries()
@@ -61,6 +63,7 @@ class ReservationGUI:
         else:
             messagebox.showerror("Error", "Please enter valid reservation details.")
 
+    #validates date
     def validate_date(self, date_text):
         try:
             datetime.strptime(date_text, '%m-%d')
@@ -68,6 +71,7 @@ class ReservationGUI:
         except ValueError:
             return False
 
+    #validates time
     def validate_time(self, time_text):
         try:
             datetime.strptime(time_text, '%H:%M')
@@ -75,17 +79,22 @@ class ReservationGUI:
         except ValueError:
             return False
 
+    #clears entries
     def clear_entries(self):
         self.entry_name.delete(0, tk.END)
         self.entry_date.delete(0, tk.END)
         self.entry_time.delete(0, tk.END)
         self.entry_party_size.delete(0, tk.END)
 
+    #load reservation data from CSV file
     def load_reservations(self):
         self.reservation_manager.load_from_file('reservation.csv')
+        #extract names from CSV
         reservation_names = [r.customer_name for r in self.reservation_manager.reservations]
+        #update dropdown menu with names
         self.reservation_dropdown['values'] = reservation_names
 
+    #display details of selected reservation in GUI
     def show_selected_reservation(self, event=None):
         selected_name = self.reservation_var.get()
 
@@ -96,10 +105,11 @@ class ReservationGUI:
                         f"Time: {reservation.reservation_time}\n" \
                         f"Party Size: {reservation.party_size}"
                 messagebox.showinfo("Reservation Details", details)
-                return  # Exit the loop once the match is found
+                return  #exit loop once the match is found
 
         messagebox.showerror("Error", "Selected reservation not found!")
 
+#only run when file is main
 if __name__ == "__main__":
     root = tk.Tk()
     gui = ReservationGUI(root)
